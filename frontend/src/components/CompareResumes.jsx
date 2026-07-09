@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../config';
 
 export default function CompareResumes({ resumes, token, onAnalyzeDirect }) {
   const [resumeAId, setResumeAId] = useState('');
@@ -20,7 +21,7 @@ export default function CompareResumes({ resumes, token, onAnalyzeDirect }) {
     const fetchA = async () => {
       setLoadingA(true);
       try {
-        const res = await fetch(`/api/resumes/${resumeAId}`, {
+        const res = await fetch(`${API_BASE_URL}/api/resumes/${resumeAId}`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await res.json();
@@ -45,7 +46,7 @@ export default function CompareResumes({ resumes, token, onAnalyzeDirect }) {
     const fetchB = async () => {
       setLoadingB(true);
       try {
-        const res = await fetch(`/api/resumes/${resumeBId}`, {
+        const res = await fetch(`${API_BASE_URL}/api/resumes/${resumeBId}`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await res.json();

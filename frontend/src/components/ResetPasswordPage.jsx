@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { API_BASE_URL } from '../config';
 
 export default function ResetPasswordPage({ token }) {
   const [password, setPassword] = useState('');
@@ -30,7 +31,7 @@ export default function ResetPasswordPage({ token }) {
     setIsLoading(true);
 
     try {
-      const response = await fetch(`/api/auth/reset-password/${token}`, {
+      const response = await fetch(`${API_BASE_URL}/api/auth/reset-password/${token}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password })

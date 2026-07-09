@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../config';
 
 export default function AuthPage({ onAuthSuccess }) {
   const [isLogin, setIsLogin] = useState(true);
@@ -21,7 +22,7 @@ export default function AuthPage({ onAuthSuccess }) {
 
   useEffect(() => {
     // 1. Fetch public Google client ID on mount
-    fetch('/api/auth/config')
+    fetch(`${API_BASE_URL}/api/auth/config`)
       .then(res => res.json())
       .then(data => {
         if (data.googleClientId) {
@@ -47,7 +48,7 @@ export default function AuthPage({ onAuthSuccess }) {
     setIsLoading(true);
     
     try {
-      const res = await fetch('/api/auth/google', {
+      const res = await fetch(`${API_BASE_URL}/api/auth/google`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -124,7 +125,7 @@ export default function AuthPage({ onAuthSuccess }) {
     setIsLoading(true);
 
     try {
-      const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
+      const endpoint = isLogin ? `${API_BASE_URL}/api/auth/login` : `${API_BASE_URL}/api/auth/register`;
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -151,7 +152,7 @@ export default function AuthPage({ onAuthSuccess }) {
     setShowGoogleMockPopup(false);
     
     try {
-      const response = await fetch('/api/auth/google', {
+      const response = await fetch(`${API_BASE_URL}/api/auth/google`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -6,6 +6,7 @@ import HistoryList from './components/HistoryList';
 import AuthPage from './components/AuthPage';
 import ResetPasswordPage from './components/ResetPasswordPage';
 import CompareResumes from './components/CompareResumes';
+import { API_BASE_URL } from './config';
 
 export default function App() {
   const [token, setToken] = useState(localStorage.getItem('token') || '');
@@ -36,7 +37,7 @@ export default function App() {
       }
 
       try {
-        const res = await fetch('/api/auth/me', {
+        const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await res.json();
@@ -71,7 +72,7 @@ export default function App() {
 
   const fetchStatus = async (authToken = token) => {
     try {
-      const res = await fetch('/api/status', {
+      const res = await fetch(`${API_BASE_URL}/api/status`, {
         headers: { 'Authorization': `Bearer ${authToken}` }
       });
       const data = await res.json();
@@ -86,7 +87,7 @@ export default function App() {
 
   const fetchResumes = async (authToken = token) => {
     try {
-      const res = await fetch('/api/resumes', {
+      const res = await fetch(`${API_BASE_URL}/api/resumes`, {
         headers: { 'Authorization': `Bearer ${authToken}` }
       });
       const data = await res.json();
@@ -102,7 +103,7 @@ export default function App() {
     setIsComparing(false);
     try {
       setIsLoading(true);
-      const res = await fetch(`/api/resumes/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/resumes/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
@@ -122,7 +123,7 @@ export default function App() {
     if (!window.confirm('Are you sure you want to delete this analysis?')) return;
 
     try {
-      const res = await fetch(`/api/resumes/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/resumes/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -148,7 +149,7 @@ export default function App() {
     }
 
     try {
-      const res = await fetch('/api/analyze', {
+      const res = await fetch(`${API_BASE_URL}/api/analyze`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
@@ -173,7 +174,7 @@ export default function App() {
     const formData = new FormData();
     formData.append('resume', file);
     try {
-      const res = await fetch('/api/analyze', {
+      const res = await fetch(`${API_BASE_URL}/api/analyze`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
@@ -194,7 +195,7 @@ export default function App() {
 
   const handleSendMessage = async (resumeId, message) => {
     try {
-      const res = await fetch(`/api/resumes/${resumeId}/chat`, {
+      const res = await fetch(`${API_BASE_URL}/api/resumes/${resumeId}/chat`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -224,7 +225,7 @@ export default function App() {
   const handleGenerateCoverLetter = async (resumeId) => {
     setIsLoading(true);
     try {
-      const res = await fetch(`/api/resumes/${resumeId}/cover-letter`, {
+      const res = await fetch(`${API_BASE_URL}/api/resumes/${resumeId}/cover-letter`, {
         method: 'POST',
         headers: { 
           'Authorization': `Bearer ${token}`
