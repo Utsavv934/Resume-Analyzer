@@ -5,9 +5,14 @@
 **/dist/
 **/build/
 
-# Environment variables
+# Environment files
 **/.env
-**/.env.*
+**/.env.local
+**/.env.production
+**/.env.development
+
+# Allow .env.example
+!**/.env.example
 
 # Logs
 *.log
